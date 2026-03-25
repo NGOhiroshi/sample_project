@@ -56,6 +56,20 @@ code .
 [dev container] Dev container running...
 ```
 
+#### 5. devcontainer.jsonを更新した場合
+
+`devcontainer.json` や `requirements.txt` など、コンテナ設定を更新した場合は、以下の手順でイメージを再ビルドしてください：
+
+**方法1: コマンドパレットを使用（推奨）**
+- `Ctrl+Shift+P` (Windows/Linux) または `Cmd+Shift+P` (Mac) を押す
+- 「Dev Containers: Rebuild Container」を検索して実行
+
+**方法2: クイックアクションから再ビルド**
+- VS Codeの左下にある「><」アイコンをクリック
+- 「Dev Containers: Rebuild Container」を選択
+
+**重要:** `postCreateCommand` の変更は再ビルドが必須です。そうしなければ新しい依存関係がインストールされません。
+
 ### よく使うコマンド
 
 ```bash
@@ -95,7 +109,12 @@ docker rm <container-id>
 - 解決策: 
   - `.devcontainer/devcontainer.json` の設定を確認
   - `docker system prune` でクリーンアップ
-  - コンテナを再度ビルド
+  - 「Dev Containers: Rebuild Container」で再ビルド
+
+**問題: requirements.txtを更新したが、パッケージがインストールされていない**
+- 解決策:
+  - `.devcontainer/devcontainer.json` が `postCreateCommand` を設定していることを確認
+  - 「Dev Containers: Rebuild Container」で再ビルド
 
 **問題: ポート番号の競合**
 - 解決策: `.devcontainer/devcontainer.json` 内の `forwardPorts` を別のポート番号に変更
